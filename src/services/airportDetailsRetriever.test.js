@@ -1,8 +1,10 @@
-const { getAirportInformation } = require('../src/airportFinder');
+const { getAirportInformation } = require('./airportDetailsRetriever');
 
 describe('GetAirportInformation function', () => {
   it('should return an object with aiport name, city, country if code is valid', () => {
-    expect(getAirportInformation('MAS')).toEqual({ Name: 'Manus Island Airport', City: 'Lorengau', Contry: 'Lorengau' });
+    expect(getAirportInformation('MAS')).toEqual({
+      Name: 'Manus Island Airport', Code: 'MAS', City: 'Lorengau', Contry: 'Lorengau',
+    });
   });
   it('should return invaid message if no airport of the given code exists', () => {
     expect(getAirportInformation('FFS')).toBe('Cannot find an airport with that code!');

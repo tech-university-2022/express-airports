@@ -1,4 +1,4 @@
-const airportDetails = require('../../resources/airportsInfo.json');
+const airportDetails = require('../../fixtures/airportsInfo.json');
 
 const getAirportInformation = (code) => {
   if (typeof code !== 'string' || code.length !== 3) throw Error('Invalid, enter a proper airport code!');
@@ -18,11 +18,7 @@ const getAirportInformation = (code) => {
   if (foundFlag === 0) return 'Cannot find an airport with that code!';
   return airportInformation;
 };
-try {
-  console.log(getAirportInformation('MAS'));
-} catch (err) {
-  console.log(err.message);
-}
+
 module.exports = {
   getAirportInformation,
 };

@@ -1,21 +1,18 @@
 const express = require('express');
-const url = require('url');
-const airportInfo = require('./utils/airportDetailsRetriever');
+const env = require('dotenv');
 
-const PORT = 3000;
-const HOST = 'localhost';
+const { airportRouter } = require('./routes/airport.router');
+const { rootRouter } = require('./routes/index');
+
+env.config();
+
+const port = process.env.PORT || 3000;
+const host = process.env.HOST || 'localhost';
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello, please enter Airport code in the url as a query!');
-});
-app.get('/airport-details', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  const airportCode = url.parse(req.url, true).query['airport-code'];
-  const airportDetails = airportInfo.getAirportInformation(airportCode);
-  console.log(airportDetails);
-  res.end(JSON.stringify(airportDetails));
-});
-app.listen(PORT, HOST, () => {
-  console.log(`Server started. Visit http://${HOST}:${PORT}`);
+app.use('/', rootRouter);
+app.use('/airport-details', airportRouter);
+
+app.listen(port, host, () => {
+  console.log(`Server started. Visit http://${host}:${port}`);
 });
